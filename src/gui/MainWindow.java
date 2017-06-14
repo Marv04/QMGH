@@ -155,7 +155,7 @@ public class MainWindow {
 		gbc_btnNewButton.gridy = 2;
 		panel_1.add(btnNewButton, gbc_btnNewButton);
 		
-		JLabel lblFortschirtt = new JLabel("Fortschirtt:");
+		JLabel lblFortschirtt = new JLabel("Fortschritt:");
 		GridBagConstraints gbc_lblFortschirtt = new GridBagConstraints();
 		gbc_lblFortschirtt.insets = new Insets(0, 0, 0, 5);
 		gbc_lblFortschirtt.gridx = 0;
@@ -163,7 +163,7 @@ public class MainWindow {
 		panel_1.add(lblFortschirtt, gbc_lblFortschirtt);
 		
 		JProgressBar progressBar = new JProgressBar();
-		progressBar.setValue(50);
+		progressBar.setValue(50);//Möglichen Fortschritt setzen
 		GridBagConstraints gbc_progressBar = new GridBagConstraints();
 		gbc_progressBar.fill = GridBagConstraints.HORIZONTAL;
 		gbc_progressBar.gridx = 1;
