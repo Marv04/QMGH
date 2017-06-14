@@ -16,6 +16,8 @@ import javax.swing.JPasswordField;
 import javax.swing.UIManager;
 import javax.swing.JButton;
 import javax.swing.JProgressBar;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class MainWindow {
 
@@ -137,6 +139,14 @@ public class MainWindow {
 		panel_1.add(btnHelp, gbc_btnHelp);
 		
 		JButton btnNewButton = new JButton("Login");
+		btnNewButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				//Handle Log-In
+				Menu.launchMenu();
+				frmQuestionmark.setVisible(false);
+			}
+		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.insets = new Insets(0, 0, 5, 0);
