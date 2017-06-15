@@ -3,9 +3,12 @@ package hashes;
 public class HashTable {
 	private int hashTableID;
 	
-	public HashTable(int hashTableID){
+	protected HashTable(int hashTableID){
 		this.hashTableID = hashTableID;
-		//lmao
-		//lmao2.0
+	}
+	
+
+	public int getHashTalbeID(){
+		return this.hashTableID;
 	}
 }
