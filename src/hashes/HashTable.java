@@ -5,5 +5,6 @@ public class HashTable {
 	
 	public HashTable(int hashTableID){
 		this.hashTableID = hashTableID;
+		//lmao
 	}
 }
