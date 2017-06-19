@@ -7,6 +7,9 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
+
+import main.SubstituteTreiber;
+
 import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -20,7 +23,24 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class MainWindow {
-
+	
+	/**
+	 * PRIVATE ADMIN ACCOUNT 
+	 * ZU VORSTELLUNGSZWECKEN
+	 * ACC: Admin
+	 * PSW: Admin123
+	 */
+	
+	private String adminName = "Admin";
+	private String adminPsw  = "Admin123";
+	
+	/**
+	 * Generierter Code von WindowBuilder
+	 * |
+	 * V
+	 */
+	
+	
 	private JFrame frmQuestionmark;
 	private JTextField textField;
 	private JPasswordField passwordField;
@@ -139,14 +159,33 @@ public class MainWindow {
 		panel_1.add(btnHelp, gbc_btnHelp);
 		
 		JButton btnNewButton = new JButton("Login");
+		
+		//Händischer Code
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				//Handle Log-In
-				Menu.launchMenu();
-				frmQuestionmark.setVisible(false);
+				//Handle Login Button pressed
+				if(textField.getText().equals(adminName)){
+					//Name war korrekt
+					if(passwordField.getText().equals(adminPsw)){
+						//Psw war korrekt
+						//Menu.launchMenu();
+						frmQuestionmark.setVisible(false); //Login Window verschwindet
+						SubstituteTreiber.mainRun(); //Vorstellungsmenü wird geöffnet
+					}
+				}else{
+					//Login Daten inkorrekt
+					
+				}
 			}
 		});
+		
+		/**
+		 * Generierter Code von WindowBuilder
+		 * |
+		 * V
+		 */
+		
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.insets = new Insets(0, 0, 5, 0);
