@@ -16,6 +16,7 @@ import java.awt.Insets;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Window.Type;
 
 public class Menu extends JFrame {
 
@@ -41,6 +42,8 @@ public class Menu extends JFrame {
 	 * Create the frame.
 	 */
 	public Menu() {
+		setResizable(false);
+		setTitle("       QuestionMark");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 500, 500);
 		contentPane = new JPanel();
@@ -58,6 +61,7 @@ public class Menu extends JFrame {
 		panel.add(lblMainmenu);
 		
 		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(Color.WHITE);
 		contentPane.add(panel_1, BorderLayout.CENTER);
 		GridBagLayout gbl_panel_1 = new GridBagLayout();
 		gbl_panel_1.columnWidths = new int[]{0, 0, 0, 0};
@@ -82,23 +86,6 @@ public class Menu extends JFrame {
 		gbc_lblNewLabel.gridx = 1;
 		gbc_lblNewLabel.gridy = 0;
 		panel_1.add(lblNewLabel, gbc_lblNewLabel);
-		
-		JLabel lblKurs = new JLabel("Kurs:");
-		lblKurs.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		GridBagConstraints gbc_lblKurs = new GridBagConstraints();
-		gbc_lblKurs.anchor = GridBagConstraints.EAST;
-		gbc_lblKurs.insets = new Insets(0, 0, 5, 5);
-		gbc_lblKurs.gridx = 0;
-		gbc_lblKurs.gridy = 1;
-		panel_1.add(lblKurs, gbc_lblKurs);
-		
-		JLabel label = new JLabel("<Kurs>");
-		label.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		GridBagConstraints gbc_label = new GridBagConstraints();
-		gbc_label.insets = new Insets(0, 0, 5, 5);
-		gbc_label.gridx = 1;
-		gbc_label.gridy = 1;
-		panel_1.add(label, gbc_label);
 		
 		JLabel label_1 = new JLabel("1.");
 		label_1.setFont(new Font("Tahoma", Font.PLAIN, 20));

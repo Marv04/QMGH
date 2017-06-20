@@ -71,6 +71,7 @@ public class MainWindow {
 	 */
 	private void initialize() {
 		frmQuestionmark = new JFrame();
+		frmQuestionmark.setResizable(false);
 		frmQuestionmark.setTitle("QuestionMark");
 		frmQuestionmark.setBounds(100, 100, 500, 300);
 		frmQuestionmark.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -156,6 +157,14 @@ public class MainWindow {
 		gbc_btnHelp.gridy = 2;
 		panel_1.add(btnHelp, gbc_btnHelp);
 		
+		JLabel label = new JLabel("");
+		label.setForeground(Color.RED);
+		label.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		GridBagConstraints gbc_label = new GridBagConstraints();
+		gbc_label.gridx = 1;
+		gbc_label.gridy = 3;
+		panel_1.add(label, gbc_label);
+		
 		JButton btnNewButton = new JButton("Login");
 		
 		//Händischer Code
@@ -165,15 +174,20 @@ public class MainWindow {
 				//Handle Login Button pressed
 				if(textField.getText().equals(adminName)){
 					//Name war korrekt
-					if(passwordField.getText().equals(adminPsw)){
+					//Char Array to String
+					String psw = new String(passwordField.getPassword());
+					if(psw.equals(adminPsw)){
 						//Psw war korrekt
 						//Menu.launchMenu();
 						frmQuestionmark.setVisible(false); //Login Window verschwindet
 						SubstituteTreiber.mainRun(); //Vorstellungsmenü wird geöffnet
+					}else{
+						//Login PSW fehlerhaft
+						label.setText("Login fehlerhaft!");
 					}
 				}else{
-					//Login Daten inkorrekt
-					
+					//Login Benutzer fehlerhaft
+					label.setText("Login fehlerhaft!");
 				}
 			}
 		});
@@ -192,20 +206,7 @@ public class MainWindow {
 		gbc_btnNewButton.gridy = 2;
 		panel_1.add(btnNewButton, gbc_btnNewButton);
 		
-		JLabel lblFortschirtt = new JLabel("Fortschritt:");
-		GridBagConstraints gbc_lblFortschirtt = new GridBagConstraints();
-		gbc_lblFortschirtt.insets = new Insets(0, 0, 0, 5);
-		gbc_lblFortschirtt.gridx = 0;
-		gbc_lblFortschirtt.gridy = 3;
-		panel_1.add(lblFortschirtt, gbc_lblFortschirtt);
 		
-		JProgressBar progressBar = new JProgressBar();
-		progressBar.setValue(50);//Möglichen Fortschritt setzen
-		GridBagConstraints gbc_progressBar = new GridBagConstraints();
-		gbc_progressBar.fill = GridBagConstraints.HORIZONTAL;
-		gbc_progressBar.gridx = 1;
-		gbc_progressBar.gridy = 3;
-		panel_1.add(progressBar, gbc_progressBar);
 	}
 
 }

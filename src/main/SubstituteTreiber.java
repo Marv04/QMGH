@@ -5,7 +5,6 @@ import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
-import user.Creator;
 import fragebogen.*;
 
 public class SubstituteTreiber {

@@ -1,6 +1,8 @@
-package user;
+package fragebogen;
 
 import fragebogen.*;
+import user.Mensch;
+
 import java.util.ArrayList;
 
 public class Creator extends Mensch{

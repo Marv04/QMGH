@@ -27,7 +27,7 @@ public class Fragebogen {
 	 * 	Cap der Frageanzahl ist 10, bei Überschreiten wird eine IndexOutOfBoundsException geworfen
 	 * 	Cap der Antwortmöglichkeitenanzahl ist 5, bei Überschreiten wird eine IndexOutOfBoundsException geworfen
 	 */
-	public Fragebogen(String titel, String exposee, ArrayList<Frage> fragen) throws IndexOutOfBoundsException{
+	protected Fragebogen(String titel, String exposee, ArrayList<Frage> fragen) throws IndexOutOfBoundsException{
 		//this.fragebogenID = this.fragebogenID + "";
 		this.titel = titel;
 		this.exposee = exposee;
