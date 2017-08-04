@@ -172,15 +172,15 @@ public class MainWindow {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				//Handle Login Button pressed
-				if(textField.getText().equals(adminName)){
+				if(textField.getText().equals("")){
 					//Name war korrekt
 					//Char Array to String
 					String psw = new String(passwordField.getPassword());
-					if(psw.equals(adminPsw)){
+					if(psw.equals("")){
 						//Psw war korrekt
-						//Menu.launchMenu();
+						Menu.launchMenu();
 						frmQuestionmark.setVisible(false); //Login Window verschwindet
-						SubstituteTreiber.mainRun(); //Vorstellungsmenü wird geöffnet
+						//SubstituteTreiber.mainRun(); //Vorstellungsmenü wird geöffnet
 					}else{
 						//Login PSW fehlerhaft
 						label.setText("Login fehlerhaft!");

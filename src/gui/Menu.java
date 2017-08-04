@@ -17,6 +17,8 @@ import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Window.Type;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Menu extends JFrame {
 
@@ -96,6 +98,17 @@ public class Menu extends JFrame {
 		panel_1.add(label_1, gbc_label_1);
 		
 		JButton btnFragebogenErstellen = new JButton("Fragebogen erstellen");
+		btnFragebogenErstellen.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+			setVisible(false);
+				FBCreate.mainRun();
+			}
+		});
+		btnFragebogenErstellen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnFragebogenErstellen.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		GridBagConstraints gbc_btnFragebogenErstellen = new GridBagConstraints();
 		gbc_btnFragebogenErstellen.fill = GridBagConstraints.HORIZONTAL;
