@@ -28,6 +28,7 @@ import javax.swing.JList;
 import javax.swing.ListSelectionModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JProgressBar;
 
 public class FBCreate extends JFrame {
 
@@ -39,6 +40,7 @@ public class FBCreate extends JFrame {
 	private String[][] questionAnswers = new String[10][5];
 	//private String[][] fb_content = new String[10][5];
 	//private String[] answers = new String[5];
+	private int questionType[] = new int[10];
 	private int questionCount = 0;
 	private int answerCount = 0;
 	private int answerCount2 = 0;
@@ -134,7 +136,9 @@ public class FBCreate extends JFrame {
 		
 		JPanel frage1Panel = new JPanel();
 		frage1Panel.setBackground(Color.WHITE);
-		tabbedPane.addTab("Frage " + questionCount, null, frage1Panel, null);
+		
+		
+		tabbedPane.addTab("Frage " + (questionCount+1), null, frage1Panel, null);
 		
 		
 		JPanel panel_3 = new JPanel();
@@ -265,11 +269,8 @@ public class FBCreate extends JFrame {
 					}
 					
 				}else{
-					//System.out.println("Feld ist leer!");
-					
+					//System.out.println("Feld ist leer!");	
 				}
-
-				
 			}
 		});
 		
@@ -425,29 +426,45 @@ public class FBCreate extends JFrame {
 		
 		//Neue Frage
 		JPanel frageAddPanel = new JPanel();
+		frageAddPanel.setBackground(Color.WHITE);
 		frageAddPanel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+
+			}
+		});
+		tabbedPane.addTab("+ Frage", null, frageAddPanel, null);
+		JButton btnFragebogenAbspeichern = new JButton("Fragebogen abspeichern");
+		btnFragebogenAbspeichern.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				//-> Daten übergeben; letztes Fragenpacket einsammeln
+				Menu.launchMenu();
+				
+				
 				//Handle grabbing info
+				//-> Handle finish (if questionCount == 9)?
 				//next question
 				if(comboBox.getSelectedIndex() == 0){
 					//JA/NEIN
+					questionType[questionCount] = 1; 
 					questionTitle[questionCount] = jaNeinTitle.getText();
 					questionAnswers[questionCount][0] = "Ja";
 					questionAnswers[questionCount][1] = "Nein";
 				}else if(comboBox.getSelectedIndex() == 1){
 					//Single-Choice
+					questionType[questionCount] = 2; 
 					questionTitle[questionCount] = singleTitle.getText();
 					if(!model.isEmpty()){
 						for(int i = 0; i<model.size();i++){
 							questionAnswers[questionCount][i] = (String) model.elementAt(i);
-						
 						}
 					}else{
 						System.err.println("Warning List supposedly empty");
 					}
 				}else if(comboBox.getSelectedIndex() == 2){
 					//Multiple-Choice
+					questionType[questionCount] = 3; 
 					questionTitle[questionCount] = multiTitle.getText();
 					if(!model2.isEmpty()){
 						for(int i = 0; i<model2.size();i++){
@@ -464,12 +481,89 @@ public class FBCreate extends JFrame {
 			
 			System.out.println("----Q" + questionCount + "----");
 			System.out.println("Title: " + questionTitle[questionCount]);
+			System.out.println("Type: " + questionType[questionCount]);
+			for(int i = 0; i<questionAnswers[0].length;i++){
+				System.out.println("Answer " + i + ": " + questionAnswers[questionCount][i]);
+			}
+			System.out.println("--------------FINAL------------");	
+			//Save data 
+			//Clear OldInput -> redirect to new panel
+			comboBox.setSelectedIndex(0);
+			jaNeinTitle.setText("");
+			singleTitle.setText("");
+			multiTitle.setText("");
+			model.clear();
+			singleChoiceAnswerField.setText("");
+			model2.clear();
+			answerFieldMulti.setText("");
+			//Handle transfer
+			
+				
+				
+			}
+		});
+		JLabel lblFgenSieEine = new JLabel("F\u00FCgen Sie eine weitere Frage hinzu:");
+		lblFgenSieEine.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		JLabel lbl_count = new JLabel("*5*");
+		JButton btnNeueFrage = new JButton("Neue Frage");
+		btnNeueFrage.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				//handle new Q
+				if(questionCount<10){
+					if(questionCount == 8){
+						btnNeueFrage.setEnabled(false);
+						//btnFragebogenAbspeichern.setEnabled(true);
+					}
+				
+				
+				//Handle grabbing info
+				//-> Handle finish (if questionCount == 9)?
+				//next question
+				if(comboBox.getSelectedIndex() == 0){
+					//JA/NEIN
+					questionType[questionCount] = 1; 
+					questionTitle[questionCount] = jaNeinTitle.getText();
+					questionAnswers[questionCount][0] = "Ja";
+					questionAnswers[questionCount][1] = "Nein";
+				}else if(comboBox.getSelectedIndex() == 1){
+					//Single-Choice
+					questionType[questionCount] = 2; 
+					questionTitle[questionCount] = singleTitle.getText();
+					if(!model.isEmpty()){
+						for(int i = 0; i<model.size();i++){
+							questionAnswers[questionCount][i] = (String) model.elementAt(i);
+						}
+					}else{
+						System.err.println("Warning List supposedly empty");
+					}
+				}else if(comboBox.getSelectedIndex() == 2){
+					//Multiple-Choice
+					questionType[questionCount] = 3; 
+					questionTitle[questionCount] = multiTitle.getText();
+					if(!model2.isEmpty()){
+						for(int i = 0; i<model2.size();i++){
+							questionAnswers[questionCount][i] = (String) model2.elementAt(i);
+						
+						}
+					}else{
+						System.err.println("Warning List supposedly empty#2");
+					}
+				}else{
+					//Error
+					
+				}
+			
+			System.out.println("----Q" + questionCount + "----");
+			System.out.println("Title: " + questionTitle[questionCount]);
+			System.out.println("Type: " + questionType[questionCount]);
 			for(int i = 0; i<questionAnswers[0].length;i++){
 				System.out.println("Answer " + i + ": " + questionAnswers[questionCount][i]);
 			}
 			System.out.println("--------------");	
 			//Save data 
-			//Clear OldInput -> redirect to new panel 
+			//Clear OldInput -> redirect to new panel
+			comboBox.setSelectedIndex(0);
 			jaNeinTitle.setText("");
 			singleTitle.setText("");
 			multiTitle.setText("");
@@ -480,11 +574,52 @@ public class FBCreate extends JFrame {
 			//Handle transfer
 			
 			questionCount++;
-			tabbedPane.setTitleAt(1, "Frage " + questionCount);
+			
+			lbl_count.setText("" + (questionCount + 1));
+			tabbedPane.setTitleAt(1, "Frage " + (questionCount + 1));
 			//frage1Panel.
-			}
+			}}
 		});
-		tabbedPane.addTab("+ Frage", null, frageAddPanel, null);
+		btnNeueFrage.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		
+		
+		lbl_count.setText("" + (questionCount +1));
+		lbl_count.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		
+		JLabel lblFragen = new JLabel("/ 10 Fragen");
+		lblFragen.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnFragebogenAbspeichern.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		GroupLayout gl_frageAddPanel = new GroupLayout(frageAddPanel);
+		gl_frageAddPanel.setHorizontalGroup(
+			gl_frageAddPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_frageAddPanel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_frageAddPanel.createParallelGroup(Alignment.TRAILING, false)
+						.addComponent(btnFragebogenAbspeichern, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(lblFgenSieEine, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addGroup(Alignment.LEADING, gl_frageAddPanel.createSequentialGroup()
+							.addComponent(btnNeueFrage)
+							.addGap(34)
+							.addComponent(lbl_count)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(lblFragen)))
+					.addContainerGap(144, Short.MAX_VALUE))
+		);
+		gl_frageAddPanel.setVerticalGroup(
+			gl_frageAddPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_frageAddPanel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblFgenSieEine)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_frageAddPanel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnNeueFrage)
+						.addComponent(lbl_count)
+						.addComponent(lblFragen))
+					.addGap(18)
+					.addComponent(btnFragebogenAbspeichern)
+					.addContainerGap(286, Short.MAX_VALUE))
+		);
+		frageAddPanel.setLayout(gl_frageAddPanel);
 	
 	}
 }

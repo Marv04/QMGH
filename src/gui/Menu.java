@@ -19,6 +19,8 @@ import java.awt.event.MouseEvent;
 import java.awt.Window.Type;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 
 public class Menu extends JFrame {
 
@@ -45,7 +47,7 @@ public class Menu extends JFrame {
 	 */
 	public Menu() {
 		setResizable(false);
-		setTitle("       QuestionMark");
+		setTitle("QuestionMark");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 500, 500);
 		contentPane = new JPanel();
@@ -65,37 +67,15 @@ public class Menu extends JFrame {
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(Color.WHITE);
 		contentPane.add(panel_1, BorderLayout.CENTER);
-		GridBagLayout gbl_panel_1 = new GridBagLayout();
-		gbl_panel_1.columnWidths = new int[]{0, 0, 0, 0};
-		gbl_panel_1.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_panel_1.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_panel_1.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		panel_1.setLayout(gbl_panel_1);
 		
 		JLabel lblUserid = new JLabel("UserID:");
 		lblUserid.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		GridBagConstraints gbc_lblUserid = new GridBagConstraints();
-		gbc_lblUserid.anchor = GridBagConstraints.EAST;
-		gbc_lblUserid.insets = new Insets(0, 0, 5, 5);
-		gbc_lblUserid.gridx = 0;
-		gbc_lblUserid.gridy = 0;
-		panel_1.add(lblUserid, gbc_lblUserid);
 		
 		JLabel lblNewLabel = new JLabel("<ID>");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
-		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel.gridx = 1;
-		gbc_lblNewLabel.gridy = 0;
-		panel_1.add(lblNewLabel, gbc_lblNewLabel);
 		
 		JLabel label_1 = new JLabel("1.");
 		label_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		GridBagConstraints gbc_label_1 = new GridBagConstraints();
-		gbc_label_1.insets = new Insets(0, 0, 5, 5);
-		gbc_label_1.gridx = 1;
-		gbc_label_1.gridy = 4;
-		panel_1.add(label_1, gbc_label_1);
 		
 		JButton btnFragebogenErstellen = new JButton("Fragebogen erstellen");
 		btnFragebogenErstellen.addMouseListener(new MouseAdapter() {
@@ -110,54 +90,36 @@ public class Menu extends JFrame {
 			}
 		});
 		btnFragebogenErstellen.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		GridBagConstraints gbc_btnFragebogenErstellen = new GridBagConstraints();
-		gbc_btnFragebogenErstellen.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnFragebogenErstellen.insets = new Insets(0, 0, 5, 0);
-		gbc_btnFragebogenErstellen.gridx = 2;
-		gbc_btnFragebogenErstellen.gridy = 4;
-		panel_1.add(btnFragebogenErstellen, gbc_btnFragebogenErstellen);
 		
 		JLabel label_2 = new JLabel("2.");
 		label_2.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		GridBagConstraints gbc_label_2 = new GridBagConstraints();
-		gbc_label_2.insets = new Insets(0, 0, 5, 5);
-		gbc_label_2.gridx = 1;
-		gbc_label_2.gridy = 5;
-		panel_1.add(label_2, gbc_label_2);
 		
 		JButton btnFragebogenVerwalten = new JButton("Fragebogen verwalten");
+		btnFragebogenVerwalten.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				FBManage.mainRun();
+				setVisible(false);
+			}
+		});
 		btnFragebogenVerwalten.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		GridBagConstraints gbc_btnFragebogenVerwalten = new GridBagConstraints();
-		gbc_btnFragebogenVerwalten.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnFragebogenVerwalten.insets = new Insets(0, 0, 5, 0);
-		gbc_btnFragebogenVerwalten.gridx = 2;
-		gbc_btnFragebogenVerwalten.gridy = 5;
-		panel_1.add(btnFragebogenVerwalten, gbc_btnFragebogenVerwalten);
 		
 		JLabel label_3 = new JLabel("3.");
 		label_3.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		GridBagConstraints gbc_label_3 = new GridBagConstraints();
-		gbc_label_3.insets = new Insets(0, 0, 5, 5);
-		gbc_label_3.gridx = 1;
-		gbc_label_3.gridy = 6;
-		panel_1.add(label_3, gbc_label_3);
 		
 		JButton btnFragebogenAusfllen = new JButton("Fragebogen ausf\u00FCllen");
+		btnFragebogenAusfllen.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				FBChoice.mainRun();
+				setVisible(false);
+				
+			}
+		});
 		btnFragebogenAusfllen.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		GridBagConstraints gbc_btnFragebogenAusfllen = new GridBagConstraints();
-		gbc_btnFragebogenAusfllen.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnFragebogenAusfllen.insets = new Insets(0, 0, 5, 0);
-		gbc_btnFragebogenAusfllen.gridx = 2;
-		gbc_btnFragebogenAusfllen.gridy = 6;
-		panel_1.add(btnFragebogenAusfllen, gbc_btnFragebogenAusfllen);
 		
 		JLabel label_4 = new JLabel("4.");
 		label_4.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		GridBagConstraints gbc_label_4 = new GridBagConstraints();
-		gbc_label_4.insets = new Insets(0, 0, 0, 5);
-		gbc_label_4.gridx = 1;
-		gbc_label_4.gridy = 7;
-		panel_1.add(label_4, gbc_label_4);
 		
 		JButton btnProgrammBeenden = new JButton("Programm beenden");
 		btnProgrammBeenden.addMouseListener(new MouseAdapter() {
@@ -168,11 +130,66 @@ public class Menu extends JFrame {
 			}
 		});
 		btnProgrammBeenden.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		GridBagConstraints gbc_btnProgrammBeenden = new GridBagConstraints();
-		gbc_btnProgrammBeenden.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnProgrammBeenden.gridx = 2;
-		gbc_btnProgrammBeenden.gridy = 7;
-		panel_1.add(btnProgrammBeenden, gbc_btnProgrammBeenden);
+		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
+		gl_panel_1.setHorizontalGroup(
+			gl_panel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addComponent(lblUserid)
+					.addGap(5)
+					.addComponent(lblNewLabel))
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addGap(90)
+					.addComponent(label_1)
+					.addGap(22)
+					.addComponent(btnFragebogenErstellen, GroupLayout.PREFERRED_SIZE, 231, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addGap(90)
+					.addComponent(label_2)
+					.addGap(22)
+					.addComponent(btnFragebogenVerwalten))
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addGap(90)
+					.addComponent(label_3)
+					.addGap(22)
+					.addComponent(btnFragebogenAusfllen, GroupLayout.PREFERRED_SIZE, 231, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addGap(90)
+					.addComponent(label_4)
+					.addGap(22)
+					.addComponent(btnProgrammBeenden, GroupLayout.PREFERRED_SIZE, 231, GroupLayout.PREFERRED_SIZE))
+		);
+		gl_panel_1.setVerticalGroup(
+			gl_panel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblUserid)
+						.addComponent(lblNewLabel))
+					.addGap(95)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel_1.createSequentialGroup()
+							.addGap(4)
+							.addComponent(label_1))
+						.addComponent(btnFragebogenErstellen))
+					.addGap(5)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel_1.createSequentialGroup()
+							.addGap(4)
+							.addComponent(label_2))
+						.addComponent(btnFragebogenVerwalten))
+					.addGap(5)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel_1.createSequentialGroup()
+							.addGap(4)
+							.addComponent(label_3))
+						.addComponent(btnFragebogenAusfllen))
+					.addGap(5)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel_1.createSequentialGroup()
+							.addGap(4)
+							.addComponent(label_4))
+						.addComponent(btnProgrammBeenden)))
+		);
+		panel_1.setLayout(gl_panel_1);
 	}
 
 }
