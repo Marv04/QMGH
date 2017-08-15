@@ -1,10 +1,15 @@
 package umfrage;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import auswertung.Fragebogenauswertung;
 
-public class FragebogenWithAntwortmoeglichkeit extends Fragebogen{
+public class FragebogenWithAntwortmoeglichkeit extends Fragebogen implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Fragebogenauswertung antwortDestination;
 	
 	public FragebogenWithAntwortmoeglichkeit(String titel, String exposee, ArrayList<Frage> fragen, Fragebogenauswertung antwortDestination){

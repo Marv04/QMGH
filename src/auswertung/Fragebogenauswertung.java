@@ -5,6 +5,7 @@ import java.util.Iterator;
 
 import umfrage.Frage;
 import umfrage.Fragebogen;
+import java.io.Serializable;
 import auswertung.Fragebogenauswertung;
 
 /**
@@ -14,7 +15,11 @@ import auswertung.Fragebogenauswertung;
  *	The <CODE>Fragebogenauswertung</CODE> contains a nested {@link java.util.ArrayList ArrayList} to save all answers submitted to the <CODE>Fragebogenauswertung</CODE> object.
  *	Storage of survey results in the Fragebogen-System is managed by the <CODE>Fragebogenasuwertung</CODE> class.
  */
-public class Fragebogenauswertung {
+public class Fragebogenauswertung implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/**
 	 * {@link umfrage.Fragebogen Fragebogen} representing and assisting the structure of answers
 	 */

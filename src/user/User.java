@@ -1,5 +1,7 @@
 package user;
 
+import java.io.Serializable;
+
 /**
  * 
  * @author Dominik <br><br>
@@ -9,7 +11,11 @@ package user;
  * Might be expanded depending on required user data
  *
  */
-public class User {
+public class User implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/*
 	 * Login-Verwaltungs-Daten
 	 */

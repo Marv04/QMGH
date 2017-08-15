@@ -1,10 +1,15 @@
 package umfrage;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import auswertung.Fragebogenauswertung;
 
-public class Fragebogen implements Cloneable{
+public class Fragebogen implements Cloneable, Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final  String titel;
 	private final String exposee;
 	private final ArrayList<Frage> fragen;

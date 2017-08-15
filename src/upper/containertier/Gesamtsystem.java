@@ -20,6 +20,7 @@ public class Gesamtsystem implements Serializable{
 	public String signalString = "Hello World";
 
 	public Gesamtsystem(ArrayList<Creator> allCreators, ArrayList<Solver> allSolvers, ArrayList<Kurs> allKurse) {
+		super();
 		this.allCreators 	= allCreators;
 		this.allSolvers 	= allSolvers;
 		this.allKurse 		= allKurse;

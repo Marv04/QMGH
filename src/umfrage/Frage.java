@@ -1,8 +1,13 @@
 package umfrage;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Frage {
+public class Frage implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final String fragebeschreibung;
 	private final int frageTyp;
 	private final ArrayList<String> antwortmoeglichkeiten;

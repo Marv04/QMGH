@@ -1,5 +1,6 @@
 package verwaltung;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -15,7 +16,11 @@ import user.Solver;
  * 	Distribution of data to the {@link user.Solver} <i>(pl.)</i> in the Fragebogen-system is managed through the <CODE>Kurs</CODE> class.
  *
  */
-public class Kurs {
+public class Kurs implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/**
 	 * display name of the <CODE>Kurs</CODE> object
 	 */
@@ -38,6 +43,7 @@ public class Kurs {
 	 * @param activeSolvers - <CODE>ArrayList</CODE> of Solvers participating in the <CODE>Kurs</CODE>
 	 */
 	public Kurs(String kursName, ArrayList<Solver> activeSolvers){
+		super();
 		this.kursName = kursName;
 		this.activeSolvers = activeSolvers;
 		this.activeFrageboegen = new ArrayList<Fragebogen>();

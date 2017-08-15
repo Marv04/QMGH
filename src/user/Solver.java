@@ -1,12 +1,17 @@
 package user;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 //import java.util.Iterator;
 import java.util.Iterator;
 
 import umfrage.FragebogenWithAntwortmoeglichkeit;
 
-public class Solver extends User{
+public class Solver extends User implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ArrayList<FragebogenWithAntwortmoeglichkeit> activeFrageboegenWithAntwortmoeglichkeit;
 	
 	public Solver(String loginName, String passwort, String vorname, String nachname){

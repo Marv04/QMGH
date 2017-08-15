@@ -1,5 +1,6 @@
 package user;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import auswertung.Fragebogenauswertung;
@@ -15,7 +16,11 @@ import verwaltung.Kurs;
  * 	The <CODE>Creator</CODE> does not have the permission to fill in Fragebogen <i>(pl.)</i> currently. 
  * 
  */
-public class Creator extends User{
+public class Creator extends User implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/**
 	 * <CODE>ArrayList</CODE> of <CODE>Kurs</CODE> <i>(pl.)</i> the instance is active in.<br>
 	 * Set to <CODE>final</CODE> in the current project version. 

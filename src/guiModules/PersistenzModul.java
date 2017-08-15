@@ -18,6 +18,7 @@ public class PersistenzModul {
 			gesSysObjectOut.close();
 			gesSysFileOut.close();
 		}catch(Exception e){
+			//System.out.println("Attentione! "+ e.toString());
 			return false;
 		}
 		return true;

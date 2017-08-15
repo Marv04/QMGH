@@ -2,6 +2,7 @@ package tests;
 
 import umfrage.*;
 import upper.containertier.Gesamtsystem;
+import user.Creator;
 import user.Solver;
 import verwaltung.Kurs;
 
@@ -18,16 +19,22 @@ public class RunfreeTreiber {
 	public static void main(String[] args){
 		Scanner sa = new Scanner(System.in);
 		
-		Gesamtsystem myGesSys = new Gesamtsystem(null, null, null);
+		ArrayList<Creator> cList1 = new ArrayList<Creator>();
+		ArrayList<Kurs> kList1 = new ArrayList<Kurs>(); 
+		cList1.add(new Creator("login", "passwort", "Domnek", "Schöller", kList1));
+		
+		Gesamtsystem myGesSys = new Gesamtsystem(cList1, null, kList1);
+		//Gesamtsystem myGesSys = new Gesamtsystem(null, null, null);
+		
 		
 		System.out.println("Signalstring I ["+ myGesSys.signalString +"]");
 		myGesSys.signalString = "Goodbye world!";
 		
-		System.out.println(PersistenzModul.saveGesamtsystem(savePath, dateiname, myGesSys));
+		//System.out.println(PersistenzModul.saveGesamtsystem(savePath, dateiname, myGesSys));
 		
 		Gesamtsystem herGesSys = PersistenzModul.loadGesamtsystem(savePath, dateiname);
 		
-		System.out.println("Signalstring III ["+ herGesSys.signalString +"]");
+		System.out.println("Signalstring III ["+ herGesSys.getAllCreators() +"]");
 		
 		
 		//System.out.println(getFragebogen(musterFB1()));
