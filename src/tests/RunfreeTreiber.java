@@ -220,7 +220,6 @@ public class RunfreeTreiber {
 		System.out.println("KursSize=="+ testKurs.activeSolvers.size());
 		while(localIt.hasNext()){
 			subSolver = localIt.next();
-			System.out.println(subSolver.testReturnAllFB());
 			subjectFragebogen = subSolver.getActiveFragebogenWithAntwortmoeglichkeit().get(0);
 			subSolver.submitFragebogenergebnis(subjectFragebogen, createAndReturnFragebogenAnswer(sa, subjectFragebogen));
 		}

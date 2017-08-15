@@ -81,7 +81,7 @@ public class Creator extends User implements Serializable{
 	 * @return a <CODE>clone</CODE> of the <CODE>ArrayList</CODE> containing <CODE>Fragebogenauswertung</CODE> <i>(pl.)</i> the instance is active in.
 	 */
 	@SuppressWarnings("unchecked")
-	public ArrayList<Fragebogenauswertung> getOwnedFragebogenasuwertungen(){
+	public ArrayList<Fragebogenauswertung> getOwnedFragebogenauswertungen(){
 		return ArrayList.class.cast(this.ownedFragebogenauswertungen.clone());
 	}
 	

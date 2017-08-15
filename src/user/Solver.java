@@ -32,13 +32,4 @@ public class Solver extends User implements Serializable{
 			fragebogenWithAntwortmoeglichkeit.addAntwort(answers);
 		}
 	}
-	
-	public String testReturnAllFB(){
-		String returnString = "";
-		Iterator<FragebogenWithAntwortmoeglichkeit> localIt = this.activeFrageboegenWithAntwortmoeglichkeit.iterator();
-		for(int i = 1;localIt.hasNext();i++){
-			returnString += i +": "+ localIt.next().getTitel() + "\n";
-		}
-		return returnString;
-	}
 }

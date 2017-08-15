@@ -7,6 +7,6 @@ import user.Creator;
 
 public class FBALoaderModul {
 	public static ArrayList<Fragebogenauswertung> loadFBA(Creator requestingUser){
-		return requestingUser.getOwnedFragebogenasuwertungen();
+		return requestingUser.getOwnedFragebogenauswertungen();
 	}
 }

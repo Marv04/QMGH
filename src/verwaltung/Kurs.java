@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import auswertung.Fragebogenauswertung;
-import umfrage.Fragebogen;
 import user.Solver;
 
 /**
@@ -29,10 +28,6 @@ public class Kurs implements Serializable{
 	 * <CODE>ArrayList</CODE> of <CODE>Solver</CODE> <i>(pl.)</i> participating in the <CODE>Kurs</CODE>
 	 */
 	public final ArrayList<Solver> activeSolvers;
-	/**
-	 * <CODE>ArrayList</CODE> of <CODE>Fragebogen</CODE> distributed to the <CODE>Kurs</CODE> object
-	 */
-	private ArrayList<Fragebogen> activeFrageboegen;
 	
 	/**
 	 * <b><i>Kurs</i></b><br>
@@ -46,7 +41,6 @@ public class Kurs implements Serializable{
 		super();
 		this.kursName = kursName;
 		this.activeSolvers = activeSolvers;
-		this.activeFrageboegen = new ArrayList<Fragebogen>();
 	}
 	
 	public String getKursName(){
@@ -59,13 +53,11 @@ public class Kurs implements Serializable{
 	 */
 	public void relayFragebogenToAllSolvers(Fragebogenauswertung antwortDestination){
 		//Fügt dem Kurs eine Umfrage hinzu
-		Fragebogen activeFragebogen = antwortDestination.getSourceFragebogen(); //Referenz mit Objekt überschrieben
-		this.activeFrageboegen.add(activeFragebogen);
 		//Kp wie ArrayList.foreach funktioniert, sonst hätte ich das benutzt
 		Iterator<Solver> activeSolverIt = this.activeSolvers.iterator();
 		while(activeSolverIt.hasNext()){
 			//Gibt den Solver Objekten Zugriff auf den Fragebogen aus dem Kurs weiter und fügt die Auswertungsreferenz hinzu
-			activeSolverIt.next().addActiveFragebogenWithAntwortmoeglichkeit(this.activeFrageboegen.get(this.activeFrageboegen.size()-1).castToFragebogenWithAntwortmoeglichkeit(antwortDestination));
+			activeSolverIt.next().addActiveFragebogenWithAntwortmoeglichkeit(antwortDestination.getSourceFragebogen().castToFragebogenWithAntwortmoeglichkeit(antwortDestination));
 		}
 	}
 

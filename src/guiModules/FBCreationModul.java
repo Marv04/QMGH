@@ -1,7 +1,6 @@
 package guiModules;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import umfrage.Frage;
 import umfrage.Fragebogen;
