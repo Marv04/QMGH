@@ -13,7 +13,7 @@ import auswertung.Fragebogenauswertung;
 import guiModules.PersistenzModul;
 
 public class RunfreeTreiber {
-	private static String savePath = "E:\\Massive Drive\\SOURCE\\Documents\\HWR";
+	private static String savePath = "C:\\OOP - Projekt";
 	private static String dateiname = "testFilename";
 	public static void main(String[] args){
 		Scanner sa = new Scanner(System.in);

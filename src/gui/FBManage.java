@@ -8,8 +8,16 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+
+import guiModules.FBDistributionModul;
+import guiModules.FBLoaderModul;
+import guiModules.FBRemovalModul;
+import umfrage.Fragebogen;
+import user.Creator;
+
 import javax.swing.JTabbedPane;
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
@@ -19,6 +27,9 @@ import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import javax.swing.JCheckBox;
 
 public class FBManage extends JFrame {
@@ -59,11 +70,25 @@ public class FBManage extends JFrame {
 		JPanel panel = new JPanel();
 		tabbedPane.addTab("List", null, panel, null);
 		
-		JList list = new JList();
+		DefaultListModel model = new DefaultListModel();
+		JList list = new JList(model);
 		list.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		Border border = BorderFactory.createLineBorder(Color.BLACK);
 		border = BorderFactory.createLineBorder(Color.BLACK);
 		list.setBorder(BorderFactory.createCompoundBorder(border,BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+		
+		//Display All FBS
+		Creator currentUser = (Creator) Menu.getUser();
+		ArrayList<Fragebogen> fbList = FBLoaderModul.loadFB(currentUser);
+		Iterator<Fragebogen> fbListIt = fbList.iterator();
+		Fragebogen currentFB;  
+		while(fbListIt.hasNext()){
+			currentFB = fbListIt.next();
+			String titel = currentFB.getTitel();
+			model.addElement(titel);
+		}
+		
+		
 		
 		Border blackline = BorderFactory.createLineBorder(Color.BLACK);
 		TitledBorder title;
@@ -90,6 +115,30 @@ public class FBManage extends JFrame {
 		
 		JPanel verteilenPanel = new JPanel();
 		verteilenPanel.setBorder(title);
+		
+		JButton btnLschen = new JButton("L\u00F6schen");
+		btnLschen.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				if(list.getSelectedIndex() != -1){
+					int choice = list.getSelectedIndex();
+					Fragebogen selected = fbList.get(choice);
+					FBRemovalModul.removeFB((Creator) Menu.getUser(), selected);
+					model.remove(choice);
+				}
+			
+			}
+		});
+		btnLschen.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		
+		JButton btnDebugg = new JButton("Debugg");
+		btnDebugg.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				
+				
+			}
+		});
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -99,7 +148,9 @@ public class FBManage extends JFrame {
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 						.addComponent(btnAbbrechen, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addComponent(btnAuswerten, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(verteilenPanel, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE))
+						.addComponent(verteilenPanel, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnLschen, GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+						.addComponent(btnDebugg))
 					.addContainerGap())
 		);
 		gl_panel.setVerticalGroup(
@@ -112,6 +163,10 @@ public class FBManage extends JFrame {
 							.addComponent(verteilenPanel, GroupLayout.PREFERRED_SIZE, 146, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(btnAuswerten)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnLschen)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnDebugg)
 							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 							.addComponent(btnAbbrechen)))
 					.addContainerGap(24, Short.MAX_VALUE))
@@ -124,6 +179,32 @@ public class FBManage extends JFrame {
 		chckbxKursB.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JButton btnVerteilen = new JButton("Verteilen");
+		btnVerteilen.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				//Distribute FB selected if Kurs chosen
+				if((chckbxKursA.isSelected() || chckbxKursB.isSelected()) && list.getSelectedIndex() != -1){
+					//Security check
+					if(chckbxKursA.isSelected()){
+						int choice = list.getSelectedIndex();
+						Fragebogen selected = fbList.get(choice);
+						FBDistributionModul.distributeFB(Menu.getSystem(), true, selected, (Creator) Menu.getUser());
+					}
+					if(chckbxKursB.isSelected()){
+						int choice = list.getSelectedIndex();
+						Fragebogen selected = fbList.get(choice);
+						FBDistributionModul.distributeFB(Menu.getSystem(), false, selected, (Creator) Menu.getUser());
+					}
+					
+				}else{
+					int choice = list.getSelectedIndex();
+					Fragebogen selected = fbList.get(choice);
+					System.out.println(selected.getFragen());
+				}
+				
+				
+			}
+		});
 		btnVerteilen.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		GroupLayout gl_verteilenPanel = new GroupLayout(verteilenPanel);
 		gl_verteilenPanel.setHorizontalGroup(

@@ -6,6 +6,13 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
+
+import guiModules.LoginModul;
+import guiModules.PersistenzModul;
+import upper.containertier.Gesamtsystem;
+import user.Creator;
+import user.Solver;
+
 import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -16,6 +23,8 @@ import javax.swing.UIManager;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -70,6 +79,14 @@ public class MainWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		//Load Gesamtsystem:
+		Gesamtsystem currentSys = PersistenzModul.loadGesamtsystem("C:\\OOP - Projekt", "testFilenameNEW");
+		System.out.println(currentSys);
+		ArrayList<Creator> abc = currentSys.getAllCreators();
+		if(abc==null){
+			System.err.println("oh oh");
+		}
+		
 		frmQuestionmark = new JFrame();
 		frmQuestionmark.setResizable(false);
 		frmQuestionmark.setTitle("QuestionMark");
@@ -122,9 +139,9 @@ public class MainWindow {
 		JButton btnHelp = new JButton("Help");
 		btnHelp.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
-		JLabel label = new JLabel("");
-		label.setForeground(Color.RED);
-		label.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		JLabel lblTest = new JLabel("");
+		lblTest.setForeground(Color.RED);
+		lblTest.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JButton btnNewButton = new JButton("Login");
 		
@@ -133,23 +150,59 @@ public class MainWindow {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				//Handle Login Button pressed
-				if(textField.getText().equals("")){
-					//Name war korrekt
-					//Char Array to String
+				
+				//Use LoginModul -> attempt Login
+				//
+				// if return != null -> success
+				// pass Shell along gui
+				//
+				//LoginModul.attemptCreatorLogin(targetSystem, loginname, passwort);
+				//LoginModul.attemptSolverLogin(targetSystem, loginname, passwort);
+				
+				if(textField.getText().startsWith("s")){
 					String psw = new String(passwordField.getPassword());
-					if(psw.equals("")){
-						//Psw war korrekt
-						Menu.launchMenu();
-						frmQuestionmark.setVisible(false); //Login Window verschwindet
-						//SubstituteTreiber.mainRun(); //Vorstellungsmenü wird geöffnet
-					}else{
-						//Login PSW fehlerhaft
-						label.setText("Login fehlerhaft!");
+					Solver currentUser = LoginModul.attemptSolverLogin(currentSys, textField.getText(), psw);
+					System.out.println(": " + currentUser);
+					if(currentUser!=null){
+						Menu.launchSolverMenu(currentUser, currentSys);
+						frmQuestionmark.setVisible(false);
 					}
+					
+				}else if(textField.getText().startsWith("c")){
+					String psw = new String(passwordField.getPassword());
+					Creator currentUser = LoginModul.attemptCreatorLogin(currentSys, textField.getText(), psw);
+					System.out.println(": " + currentUser);
+					if(currentUser!=null){
+						Menu.launchCreatorMenu(currentUser, currentSys);
+						frmQuestionmark.setVisible(false);
+					}
+					
 				}else{
-					//Login Benutzer fehlerhaft
-					label.setText("Login fehlerhaft!");
+					//Error
+					lblTest.setText("Login fehlerhaft!");
 				}
+				
+				
+				
+				
+				
+//				if(textField.getText().equals("")){
+//					//Name war korrekt
+//					//Char Array to String
+//					String psw = new String(passwordField.getPassword());
+//					if(psw.equals("")){
+//						//Psw war korrekt
+//						Menu.launchMenu();
+//						frmQuestionmark.setVisible(false); //Login Window verschwindet
+//						//SubstituteTreiber.mainRun(); //Vorstellungsmenü wird geöffnet
+//					}else{
+//						//Login PSW fehlerhaft
+//						label.setText("Login fehlerhaft!");
+//					}
+//				}else{
+//					//Login Benutzer fehlerhaft
+//					label.setText("Login fehlerhaft!");
+//				}
 			}
 		});
 		
@@ -176,24 +229,26 @@ public class MainWindow {
 								.addComponent(lblPasswort)
 								.addComponent(lblUserid))
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
-								.addGroup(gl_panel_1.createSequentialGroup()
-									.addComponent(label)
-									.addGap(92))
-								.addGroup(gl_panel_1.createSequentialGroup()
+							.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
+								.addGroup(Alignment.TRAILING, gl_panel_1.createSequentialGroup()
 									.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-									.addGap(341))
-								.addComponent(passwordField, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
+									.addGap(131))
+								.addGroup(gl_panel_1.createSequentialGroup()
+									.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED, 131, Short.MAX_VALUE)))
+							.addGap(210)))
 					.addGap(398))
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblTest, GroupLayout.DEFAULT_SIZE, 464, Short.MAX_VALUE)
+					.addContainerGap())
 		);
 		gl_panel_1.setVerticalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_1.createSequentialGroup()
-					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-						.addComponent(label)
-						.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
-							.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addComponent(lblUserid)))
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
+						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblUserid))
 					.addGap(5)
 					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
 						.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -201,7 +256,10 @@ public class MainWindow {
 					.addGap(5)
 					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
 						.addComponent(btnHelp)
-						.addComponent(btnNewButton)))
+						.addComponent(btnNewButton))
+					.addGap(3)
+					.addComponent(lblTest, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
 		);
 		panel_1.setLayout(gl_panel_1);
 		

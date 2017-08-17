@@ -18,7 +18,9 @@ public class LoginModul {
 		Creator creatorShell;
 		//Loopt durch alle Creator und testet Login-Daten
 		while(creatorListIt.hasNext()){
+			//System.out.println("TestStatementFOrProval");
 			creatorShell = creatorListIt.next();
+			//System.out.println("Name: " + creatorShell.getVorname());
 			if(creatorShell.isProperPasswort(loginname, passwort)){
 				//Nutzerdaten gefunden
 				return creatorShell;
@@ -40,7 +42,7 @@ public class LoginModul {
 				return solverShell;
 			}
 		}
-		//Nutzerdaten nciht gefunden
+		//Nutzerdaten nicht gefunden
 		return null;
 	}
 }

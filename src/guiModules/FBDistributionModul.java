@@ -18,6 +18,7 @@ public class FBDistributionModul {
 				requestingUser.distributeFragebogenTo(kursList.get(1), fbToBeDistributed);
 			}
 		}catch(Exception e){
+			e.printStackTrace();
 			return false;
 		}
 		return true;
