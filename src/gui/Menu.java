@@ -12,6 +12,13 @@ import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import javax.swing.border.LineBorder;
+
+import guiModules.PersistenzModul;
+import upper.containertier.Gesamtsystem;
+import user.Creator;
+import user.Solver;
+import user.User;
+
 import java.awt.Insets;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
@@ -25,6 +32,9 @@ import javax.swing.GroupLayout.Alignment;
 public class Menu extends JFrame {
 
 	private JPanel contentPane;
+	private static boolean userIsCreator = true;
+	private static User currentUser;
+	private static Gesamtsystem currentGesSys;
 
 	/**
 	 * Launch the application.
@@ -41,11 +51,36 @@ public class Menu extends JFrame {
 			}
 		});
 	}
+	
+	public static void launchSolverMenu(Solver currentUserImp, Gesamtsystem currentSys){
+		userIsCreator = false;
+		currentUser = currentUserImp;
+		currentGesSys = currentSys;
+		launchMenu();
+	}
+	
+	public static void launchCreatorMenu(Creator currentUserImp, Gesamtsystem currentSys){
+		userIsCreator = true;
+		currentUser = currentUserImp;
+		currentGesSys = currentSys;
+		launchMenu();
+	}
+	
+	public static Gesamtsystem getSystem(){
+		return currentGesSys;
+	}
+	public static User getUser(){
+		return currentUser;
+	}
+	public static boolean userIsCreator(){
+		return userIsCreator;
+	}
 
 	/**
 	 * Create the frame.
 	 */
 	public Menu() {
+		setVisible(true);
 		setResizable(false);
 		setTitle("QuestionMark");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -72,42 +107,60 @@ public class Menu extends JFrame {
 		lblUserid.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JLabel lblNewLabel = new JLabel("<ID>");
+		lblNewLabel.setForeground(Color.BLUE);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNewLabel.setText(currentUser.getVorname());
 		
 		JLabel label_1 = new JLabel("1.");
 		label_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JButton btnFragebogenErstellen = new JButton("Fragebogen erstellen");
-		btnFragebogenErstellen.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-			setVisible(false);
-				FBCreate.mainRun();
-			}
-		});
-		btnFragebogenErstellen.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		if(!userIsCreator){
+			btnFragebogenErstellen.setEnabled(false);
+		}else{
+			btnFragebogenErstellen.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+				setVisible(false);
+					FBCreate.mainRun();
+				}
+			});
+			btnFragebogenErstellen.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
+		}
 		btnFragebogenErstellen.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JLabel label_2 = new JLabel("2.");
 		label_2.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JButton btnFragebogenVerwalten = new JButton("Fragebogen verwalten");
-		btnFragebogenVerwalten.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				FBManage.mainRun();
-				setVisible(false);
-			}
-		});
+		if(!userIsCreator){
+			btnFragebogenVerwalten.setEnabled(false);
+		}else{
+			btnFragebogenVerwalten.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+				}
+			});
+			btnFragebogenVerwalten.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					FBManage.mainRun();
+					setVisible(false);
+				}
+			});
+		}
 		btnFragebogenVerwalten.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JLabel label_3 = new JLabel("3.");
 		label_3.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JButton btnFragebogenAusfllen = new JButton("Fragebogen ausf\u00FCllen");
+		btnFragebogenAusfllen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		btnFragebogenAusfllen.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -126,6 +179,8 @@ public class Menu extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				//Close Programm
+				//Save First:
+				PersistenzModul.saveGesamtsystem("C:\\OOP - Projekt", "testFilenameNEW", currentGesSys);
 				System.exit(0);
 			}
 		});

@@ -1,5 +1,6 @@
 package verwaltung;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -15,7 +16,7 @@ import user.Solver;
  * 	Distribution of data to the {@link user.Solver} <i>(pl.)</i> in the Fragebogen-system is managed through the <CODE>Kurs</CODE> class.
  *
  */
-public class Kurs {
+public class Kurs implements Serializable{
 	/**
 	 * display name of the <CODE>Kurs</CODE> object
 	 */

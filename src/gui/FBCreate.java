@@ -21,6 +21,11 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import java.awt.CardLayout;
 import javax.swing.border.LineBorder;
+
+import guiModules.FBCreationModul;
+import umfrage.Frage;
+import user.Creator;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JButton;
@@ -28,6 +33,8 @@ import javax.swing.JList;
 import javax.swing.ListSelectionModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+
 import javax.swing.JProgressBar;
 
 public class FBCreate extends JFrame {
@@ -36,16 +43,18 @@ public class FBCreate extends JFrame {
 	private JTextField textField;
 	private JTextField singleChoiceAnswerField;
 	
-	private String[] questionTitle = new String[10];
-	private String[][] questionAnswers = new String[10][5];
+	//private String[] questionTitle = new String[10];
+	//private String[][] questionAnswers = new String[10][5];
 	//private String[][] fb_content = new String[10][5];
 	//private String[] answers = new String[5];
-	private int questionType[] = new int[10];
+	//private int questionType[] = new int[10];
 	private int questionCount = 0;
 	private int answerCount = 0;
 	private int answerCount2 = 0;
+	private String FBTitel = "";
+	private String FBExpose = "";
 	private JTextField answerFieldMulti;
-	
+	private ArrayList<Frage> fragenList = new ArrayList<Frage>();
 	
 	
 	/**
@@ -435,11 +444,15 @@ public class FBCreate extends JFrame {
 		});
 		tabbedPane.addTab("+ Frage", null, frageAddPanel, null);
 		JButton btnFragebogenAbspeichern = new JButton("Fragebogen abspeichern");
+		btnFragebogenAbspeichern.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		btnFragebogenAbspeichern.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				//-> Daten übergeben; letztes Fragenpacket einsammeln
-				Menu.launchMenu();
+				//Menu.launchMenu();
 				
 				
 				//Handle grabbing info
@@ -447,30 +460,30 @@ public class FBCreate extends JFrame {
 				//next question
 				if(comboBox.getSelectedIndex() == 0){
 					//JA/NEIN
-					questionType[questionCount] = 1; 
-					questionTitle[questionCount] = jaNeinTitle.getText();
-					questionAnswers[questionCount][0] = "Ja";
-					questionAnswers[questionCount][1] = "Nein";
+					ArrayList<String> antworten = new ArrayList<String>();
+					antworten.add("Ja");
+					antworten.add("Nein");
+					fragenList.add(new Frage(jaNeinTitle.getText(), 0, antworten));
 				}else if(comboBox.getSelectedIndex() == 1){
 					//Single-Choice
-					questionType[questionCount] = 2; 
-					questionTitle[questionCount] = singleTitle.getText();
 					if(!model.isEmpty()){
+						ArrayList<String> antworten = new ArrayList<String>();
 						for(int i = 0; i<model.size();i++){
-							questionAnswers[questionCount][i] = (String) model.elementAt(i);
+							antworten.add((String) model.elementAt(i));
 						}
+						fragenList.add(new Frage(singleTitle.getText(), 1, antworten));	
 					}else{
 						System.err.println("Warning List supposedly empty");
 					}
 				}else if(comboBox.getSelectedIndex() == 2){
 					//Multiple-Choice
-					questionType[questionCount] = 3; 
-					questionTitle[questionCount] = multiTitle.getText();
 					if(!model2.isEmpty()){
+						ArrayList<String> antworten = new ArrayList<String>();
 						for(int i = 0; i<model2.size();i++){
-							questionAnswers[questionCount][i] = (String) model2.elementAt(i);
-						
+							antworten.add((String) model2.elementAt(i));
 						}
+						fragenList.add(new Frage(multiTitle.getText(), 2, antworten));	
+						
 					}else{
 						System.err.println("Warning List supposedly empty#2");
 					}
@@ -479,14 +492,10 @@ public class FBCreate extends JFrame {
 					
 				}
 			
-			System.out.println("----Q" + questionCount + "----");
-			System.out.println("Title: " + questionTitle[questionCount]);
-			System.out.println("Type: " + questionType[questionCount]);
-			for(int i = 0; i<questionAnswers[0].length;i++){
-				System.out.println("Answer " + i + ": " + questionAnswers[questionCount][i]);
-			}
-			System.out.println("--------------FINAL------------");	
 			//Save data 
+			FBTitel = textField.getText();
+			FBExpose = textArea.getText();
+			
 			//Clear OldInput -> redirect to new panel
 			comboBox.setSelectedIndex(0);
 			jaNeinTitle.setText("");
@@ -496,10 +505,16 @@ public class FBCreate extends JFrame {
 			singleChoiceAnswerField.setText("");
 			model2.clear();
 			answerFieldMulti.setText("");
+			
 			//Handle transfer
 			
-				
-				
+			System.err.println(FBCreationModul.createFB((Creator) Menu.getUser(), FBTitel, FBExpose, fragenList));
+			System.err.println(fragenList);
+			//FBCreationModul.createFB(fbCreator, FBTitel, FBExpose, frageDaten)
+				//-> frageDaten muss 3D sein (ist aktuell 2D)
+			//If boolean = true;
+			setVisible(false);
+			Menu.launchMenu();
 			}
 		});
 		JLabel lblFgenSieEine = new JLabel("F\u00FCgen Sie eine weitere Frage hinzu:");
@@ -509,6 +524,8 @@ public class FBCreate extends JFrame {
 		btnNeueFrage.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				answerCount = 0;
+				answerCount2 = 0;
 				//handle new Q
 				if(questionCount<10){
 					if(questionCount == 8){
@@ -522,30 +539,31 @@ public class FBCreate extends JFrame {
 				//next question
 				if(comboBox.getSelectedIndex() == 0){
 					//JA/NEIN
-					questionType[questionCount] = 1; 
-					questionTitle[questionCount] = jaNeinTitle.getText();
-					questionAnswers[questionCount][0] = "Ja";
-					questionAnswers[questionCount][1] = "Nein";
+					ArrayList<String> antworten = new ArrayList<String>();
+					antworten.add("Ja");
+					antworten.add("Nein");
+					fragenList.add(new Frage(jaNeinTitle.getText(), 0, antworten));
 				}else if(comboBox.getSelectedIndex() == 1){
 					//Single-Choice
-					questionType[questionCount] = 2; 
-					questionTitle[questionCount] = singleTitle.getText();
 					if(!model.isEmpty()){
+						ArrayList<String> antworten = new ArrayList<String>();
 						for(int i = 0; i<model.size();i++){
-							questionAnswers[questionCount][i] = (String) model.elementAt(i);
+							antworten.add((String) model.elementAt(i));
 						}
+					fragenList.add(new Frage(singleTitle.getText(), 1, antworten));	
+					
 					}else{
 						System.err.println("Warning List supposedly empty");
 					}
 				}else if(comboBox.getSelectedIndex() == 2){
 					//Multiple-Choice
-					questionType[questionCount] = 3; 
-					questionTitle[questionCount] = multiTitle.getText();
 					if(!model2.isEmpty()){
+						ArrayList<String> antworten = new ArrayList<String>();
 						for(int i = 0; i<model2.size();i++){
-							questionAnswers[questionCount][i] = (String) model2.elementAt(i);
-						
+							antworten.add((String) model2.elementAt(i));
 						}
+						fragenList.add(new Frage(multiTitle.getText(), 2, antworten));	
+						
 					}else{
 						System.err.println("Warning List supposedly empty#2");
 					}
@@ -553,14 +571,7 @@ public class FBCreate extends JFrame {
 					//Error
 					
 				}
-			
-			System.out.println("----Q" + questionCount + "----");
-			System.out.println("Title: " + questionTitle[questionCount]);
-			System.out.println("Type: " + questionType[questionCount]);
-			for(int i = 0; i<questionAnswers[0].length;i++){
-				System.out.println("Answer " + i + ": " + questionAnswers[questionCount][i]);
-			}
-			System.out.println("--------------");	
+				
 			//Save data 
 			//Clear OldInput -> redirect to new panel
 			comboBox.setSelectedIndex(0);

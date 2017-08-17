@@ -1,5 +1,7 @@
 package user;
 
+import java.io.Serializable;
+
 /**
  * 
  * @author Dominik <br><br>
@@ -9,7 +11,7 @@ package user;
  * Might be expanded depending on required user data
  *
  */
-public class User {
+public class User implements Serializable{
 	/*
 	 * Login-Verwaltungs-Daten
 	 */
@@ -59,6 +61,7 @@ public class User {
 	 * @return true if the password matches with the system data
 	 */
 	public boolean isProperPasswort(String loginName, String passwort){
+		System.out.println("Name: " + this.loginName + " Claim: " + loginName + " PSW: " + this.passwort + " Claim: " + passwort);
 		return (this.loginName.equals(loginName) && this.passwort.equals(passwort));
 	}
 	

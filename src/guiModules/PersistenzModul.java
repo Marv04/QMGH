@@ -27,8 +27,8 @@ public class PersistenzModul {
 		try{
 			FileInputStream gesSysFileIn = new FileInputStream(dateipfad +"\\"+ dateiname +".wi16");
 			ObjectInputStream gesSysObjectIn = new ObjectInputStream(gesSysFileIn);
-			
 			return (Gesamtsystem) gesSysObjectIn.readObject();
+
 		}catch(Exception e){
 			return null;
 		}
