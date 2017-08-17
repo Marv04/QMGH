@@ -7,6 +7,6 @@ import user.Solver;
 
 public class FBSLoaderModul {
 	public static ArrayList<FragebogenWithAntwortmoeglichkeit> loadFBS(Solver requestingUser){
-		return requestingUser.getActiveFragebogenWithAntwortmoeglichkeit();
+		return requestingUser.getActiveFrageboegenWithAntwortmoeglichkeit();
 	}
 }

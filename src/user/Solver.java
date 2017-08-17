@@ -2,8 +2,6 @@ package user;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-//import java.util.Iterator;
-import java.util.Iterator;
 
 import umfrage.FragebogenWithAntwortmoeglichkeit;
 
@@ -19,7 +17,7 @@ public class Solver extends User implements Serializable{
 		this.activeFrageboegenWithAntwortmoeglichkeit = new ArrayList<FragebogenWithAntwortmoeglichkeit>();
 	}
 	
-	public ArrayList<FragebogenWithAntwortmoeglichkeit> getActiveFragebogenWithAntwortmoeglichkeit(){
+	public ArrayList<FragebogenWithAntwortmoeglichkeit> getActiveFrageboegenWithAntwortmoeglichkeit(){
 		return this.activeFrageboegenWithAntwortmoeglichkeit;
 	}
 	
