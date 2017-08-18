@@ -5,6 +5,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.Color;
+import java.awt.Desktop;
+
 import javax.swing.border.LineBorder;
 
 import guiModules.LoginModul;
@@ -23,6 +25,7 @@ import javax.swing.UIManager;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.GroupLayout;
@@ -137,6 +140,14 @@ public class MainWindow {
 		passwordField.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JButton btnHelp = new JButton("Help");
+		btnHelp.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				//Display Help HTML page
+				
+				
+			}
+		});
 		btnHelp.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JLabel lblTest = new JLabel("");
