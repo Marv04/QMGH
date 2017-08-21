@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
@@ -60,11 +61,9 @@ public class FBChoice extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
+		
 		DefaultListModel model = new DefaultListModel();
 		JList list = new JList(model);
-		list.removeAll();
-		list.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		User currentUser = Menu.getUser();
 		if(!Menu.userIsCreator()){
 			ArrayList<FragebogenWithAntwortmoeglichkeit> fbList = FBSLoaderModul.loadFBS((Solver) currentUser);
@@ -77,14 +76,11 @@ public class FBChoice extends JFrame {
 				model.addElement(titel);
 			}
 		}
-		//FBSLoaderModul.loadFBS(requestingUser);
-		//Can Creator answer FBS?
 		
 		
 		
 		Border border = BorderFactory.createLineBorder(Color.BLACK);
 		border = BorderFactory.createLineBorder(Color.BLACK);
-		list.setBorder(BorderFactory.createCompoundBorder(border,BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 		
 		JButton btnChoose = new JButton("Ausw\u00E4hlen");
 		btnChoose.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -119,36 +115,51 @@ public class FBChoice extends JFrame {
 		label.setForeground(Color.BLUE);
 		label.setText(currentUser.getVorname());
 		label.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		
+		JScrollPane scrollPane = new JScrollPane();
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addComponent(list, GroupLayout.PREFERRED_SIZE, 320, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
+					.addContainerGap()
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 298, GroupLayout.PREFERRED_SIZE)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-							.addComponent(btnAbbrechen, GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
-							.addComponent(btnChoose, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE))
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_contentPane.createSequentialGroup()
+								.addGap(15)
+								.addComponent(btnChoose))
+							.addGroup(gl_contentPane.createSequentialGroup()
+								.addGap(18)
+								.addComponent(lblId)
+								.addGap(1)
+								.addComponent(label)))
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(lblId)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(label)
-							.addGap(27))))
+							.addGap(18)
+							.addComponent(btnAbbrechen)))
+					.addGap(140))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-					.addComponent(list, GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
-					.addGroup(gl_contentPane.createSequentialGroup()
-						.addComponent(btnChoose)
-						.addGap(14)
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-							.addComponent(lblId)
-							.addComponent(label))
-						.addPreferredGap(ComponentPlacement.RELATED, 318, Short.MAX_VALUE)
-						.addComponent(btnAbbrechen)
-						.addContainerGap()))
+				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
+						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+							.addComponent(btnChoose)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblId)
+								.addComponent(label))
+							.addPreferredGap(ComponentPlacement.RELATED, 302, Short.MAX_VALUE)
+							.addComponent(btnAbbrechen))
+						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 402, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
 		);
+		
+		scrollPane.setViewportView(list);
+		list.removeAll();
+		list.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		list.setBorder(BorderFactory.createCompoundBorder(border,BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 		contentPane.setLayout(gl_contentPane);
 	}
 }

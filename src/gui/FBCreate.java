@@ -35,19 +35,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-import javax.swing.JProgressBar;
-
 public class FBCreate extends JFrame {
 
+
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField singleChoiceAnswerField;
-	
-	//private String[] questionTitle = new String[10];
-	//private String[][] questionAnswers = new String[10][5];
-	//private String[][] fb_content = new String[10][5];
-	//private String[] answers = new String[5];
-	//private int questionType[] = new int[10];
 	private int questionCount = 0;
 	private int answerCount = 0;
 	private int answerCount2 = 0;
@@ -154,10 +148,10 @@ public class FBCreate extends JFrame {
 		panel_3.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel_3.setBackground(Color.WHITE);
 		
-		JComboBox comboBox = new JComboBox();
+		JComboBox<String> comboBox = new JComboBox<String>();
 		
 		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Ja/Nein", "Single-Choice", "Multiple-Choice"}));
+		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Ja/Nein", "Single-Choice", "Multiple-Choice"}));
 		
 		JLabel lblFragentyp = new JLabel("Fragentyp:");
 		lblFragentyp.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -237,9 +231,9 @@ public class FBCreate extends JFrame {
 						.addComponent(lblJanein))
 					.addContainerGap(125, Short.MAX_VALUE))
 		);
-		DefaultListModel model = new DefaultListModel();
+		DefaultListModel<String> model = new DefaultListModel<String>();
 		
-		JList listAnswers = new JList(model);
+		JList<String> listAnswers = new JList<String>(model);
 		listAnswers.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		
@@ -269,16 +263,14 @@ public class FBCreate extends JFrame {
 			public void mouseClicked(MouseEvent arg0) {
 				//Antwortmöglichkeit Hinzufügen Single Choice
 				if(!singleChoiceAnswerField.getText().equals("")){
-					//System.out.println("Feld ist nicht leer!");
 					if(answerCount < 5){
 						System.out.println("Added " + singleChoiceAnswerField.getText() + " to Answers at " + answerCount);
 						model.addElement(singleChoiceAnswerField.getText());
-						answerCount++;
-						
+						answerCount++;	
 					}
 					
 				}else{
-					//System.out.println("Feld ist leer!");	
+					
 				}
 			}
 		});
@@ -452,9 +444,6 @@ public class FBCreate extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				//-> Daten übergeben; letztes Fragenpacket einsammeln
-				//Menu.launchMenu();
-				
-				
 				//Handle grabbing info
 				//-> Handle finish (if questionCount == 9)?
 				//next question

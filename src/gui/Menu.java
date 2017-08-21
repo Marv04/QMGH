@@ -183,7 +183,7 @@ public class Menu extends JFrame {
 			public void mouseClicked(MouseEvent arg0) {
 				//Close Programm
 				//Save First:
-				PersistenzModul.saveGesamtsystem("C:\\OOP - Projekt", "testFilenameNEW", currentGesSys);
+				PersistenzModul.saveGesamtsystem("C:\\OOP - Projekt", "QuestionMarkFile", currentGesSys);
 				System.exit(0);
 			}
 		});

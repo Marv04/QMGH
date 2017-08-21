@@ -44,6 +44,14 @@ import java.util.Iterator;
 
 public class FBEvaluate extends JFrame {
 
+	/**
+	 * DIESE KLASSE HAT BISHER NOCH KEINE FUNKTION
+	 * SIE IST EINE BEREINIGTE KOPIE DER FBANSWER KLASSE
+	 * SOBALD AUSWERTUNGS VERFÜGBAR SIND WIRD DIESES KOMMENTAR ENTFERNT
+	 * 
+	 */
+	
+	
 	private JPanel contentPane;
 	private static FragebogenWithAntwortmoeglichkeit currentFB;
 	static ArrayList<Frage> fragenList = new ArrayList<Frage>();
