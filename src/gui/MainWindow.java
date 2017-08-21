@@ -5,6 +5,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.Color;
+import java.awt.Desktop;
+
 import javax.swing.border.LineBorder;
 
 import guiModules.LoginModul;
@@ -23,30 +25,15 @@ import javax.swing.UIManager;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-public class MainWindow {
-	
-	/**
-	 * PRIVATE ADMIN ACCOUNT 
-	 * ZU VORSTELLUNGSZWECKEN
-	 * ACC: Admin
-	 * PSW: Admin123
-	 */
-	
-	private String adminName = "Admin";
-	private String adminPsw  = "Admin123";
-	
-	/**
-	 * Generierter Code von WindowBuilder
-	 * |
-	 * V
-	 */
-	
+public class MainWindow {	
 	
 	private JFrame frmQuestionmark;
 	private JTextField textField;
@@ -80,13 +67,9 @@ public class MainWindow {
 	 */
 	private void initialize() {
 		//Load Gesamtsystem:
-		Gesamtsystem currentSys = PersistenzModul.loadGesamtsystem("C:\\OOP - Projekt", "testFilenameNEW");
-		System.out.println(currentSys);
+		Gesamtsystem currentSys = PersistenzModul.loadGesamtsystem("C:\\OOP - Projekt", "QuestionMarkFile");
 		ArrayList<Creator> abc = currentSys.getAllCreators();
-		if(abc==null){
-			System.err.println("oh oh");
-		}
-		
+
 		frmQuestionmark = new JFrame();
 		frmQuestionmark.setResizable(false);
 		frmQuestionmark.setTitle("QuestionMark");
@@ -137,6 +120,21 @@ public class MainWindow {
 		passwordField.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JButton btnHelp = new JButton("Help");
+		btnHelp.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				//Display Help HTML page
+				try {
+					File helpPage = new File("src/help/helpPage.html");
+					java.awt.Desktop.getDesktop().open(helpPage);;
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					System.out.println("An Error occured");
+				}
+				
+				
+			}
+		});
 		btnHelp.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JLabel lblTest = new JLabel("");
@@ -154,15 +152,12 @@ public class MainWindow {
 				//Use LoginModul -> attempt Login
 				//
 				// if return != null -> success
-				// pass Shell along gui
-				//
-				//LoginModul.attemptCreatorLogin(targetSystem, loginname, passwort);
-				//LoginModul.attemptSolverLogin(targetSystem, loginname, passwort);
+				// pass UserShell along to Menu
+				
 				
 				if(textField.getText().startsWith("s")){
 					String psw = new String(passwordField.getPassword());
 					Solver currentUser = LoginModul.attemptSolverLogin(currentSys, textField.getText(), psw);
-					System.out.println(": " + currentUser);
 					if(currentUser!=null){
 						Menu.launchSolverMenu(currentUser, currentSys);
 						frmQuestionmark.setVisible(false);
@@ -171,7 +166,6 @@ public class MainWindow {
 				}else if(textField.getText().startsWith("c")){
 					String psw = new String(passwordField.getPassword());
 					Creator currentUser = LoginModul.attemptCreatorLogin(currentSys, textField.getText(), psw);
-					System.out.println(": " + currentUser);
 					if(currentUser!=null){
 						Menu.launchCreatorMenu(currentUser, currentSys);
 						frmQuestionmark.setVisible(false);
@@ -182,27 +176,6 @@ public class MainWindow {
 					lblTest.setText("Login fehlerhaft!");
 				}
 				
-				
-				
-				
-				
-//				if(textField.getText().equals("")){
-//					//Name war korrekt
-//					//Char Array to String
-//					String psw = new String(passwordField.getPassword());
-//					if(psw.equals("")){
-//						//Psw war korrekt
-//						Menu.launchMenu();
-//						frmQuestionmark.setVisible(false); //Login Window verschwindet
-//						//SubstituteTreiber.mainRun(); //Vorstellungsmenü wird geöffnet
-//					}else{
-//						//Login PSW fehlerhaft
-//						label.setText("Login fehlerhaft!");
-//					}
-//				}else{
-//					//Login Benutzer fehlerhaft
-//					label.setText("Login fehlerhaft!");
-//				}
 			}
 		});
 		

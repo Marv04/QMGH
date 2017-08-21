@@ -18,6 +18,7 @@ import upper.containertier.Gesamtsystem;
 import user.Creator;
 import user.Solver;
 import user.User;
+import verwaltung.Kurs;
 
 import java.awt.Insets;
 import javax.swing.JButton;
@@ -28,6 +29,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class Menu extends JFrame {
 
@@ -35,6 +37,7 @@ public class Menu extends JFrame {
 	private static boolean userIsCreator = true;
 	private static User currentUser;
 	private static Gesamtsystem currentGesSys;
+	private static Kurs userKurs;
 
 	/**
 	 * Launch the application.
@@ -180,46 +183,66 @@ public class Menu extends JFrame {
 			public void mouseClicked(MouseEvent arg0) {
 				//Close Programm
 				//Save First:
-				PersistenzModul.saveGesamtsystem("C:\\OOP - Projekt", "testFilenameNEW", currentGesSys);
+				PersistenzModul.saveGesamtsystem("C:\\OOP - Projekt", "QuestionMarkFile", currentGesSys);
 				System.exit(0);
 			}
 		});
 		btnProgrammBeenden.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		
+		JLabel lblKurs = new JLabel("Kurs:");
+		lblKurs.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		
+		JLabel label = new JLabel("<Kurs>");
+		label.setForeground(Color.BLUE);
+		label.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_1.createSequentialGroup()
-					.addComponent(lblUserid)
-					.addGap(5)
-					.addComponent(lblNewLabel))
-				.addGroup(gl_panel_1.createSequentialGroup()
-					.addGap(90)
-					.addComponent(label_1)
-					.addGap(22)
-					.addComponent(btnFragebogenErstellen, GroupLayout.PREFERRED_SIZE, 231, GroupLayout.PREFERRED_SIZE))
-				.addGroup(gl_panel_1.createSequentialGroup()
-					.addGap(90)
-					.addComponent(label_2)
-					.addGap(22)
-					.addComponent(btnFragebogenVerwalten))
-				.addGroup(gl_panel_1.createSequentialGroup()
-					.addGap(90)
-					.addComponent(label_3)
-					.addGap(22)
-					.addComponent(btnFragebogenAusfllen, GroupLayout.PREFERRED_SIZE, 231, GroupLayout.PREFERRED_SIZE))
-				.addGroup(gl_panel_1.createSequentialGroup()
-					.addGap(90)
-					.addComponent(label_4)
-					.addGap(22)
-					.addComponent(btnProgrammBeenden, GroupLayout.PREFERRED_SIZE, 231, GroupLayout.PREFERRED_SIZE))
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel_1.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(lblUserid)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(lblNewLabel))
+						.addGroup(gl_panel_1.createSequentialGroup()
+							.addGap(90)
+							.addComponent(label_1)
+							.addGap(22)
+							.addComponent(btnFragebogenErstellen, GroupLayout.PREFERRED_SIZE, 231, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel_1.createSequentialGroup()
+							.addGap(90)
+							.addComponent(label_2)
+							.addGap(22)
+							.addComponent(btnFragebogenVerwalten))
+						.addGroup(gl_panel_1.createSequentialGroup()
+							.addGap(90)
+							.addComponent(label_3)
+							.addGap(22)
+							.addComponent(btnFragebogenAusfllen, GroupLayout.PREFERRED_SIZE, 231, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel_1.createSequentialGroup()
+							.addGap(90)
+							.addComponent(label_4)
+							.addGap(22)
+							.addComponent(btnProgrammBeenden, GroupLayout.PREFERRED_SIZE, 231, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel_1.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(lblKurs)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(label)))
+					.addContainerGap(124, Short.MAX_VALUE))
 		);
 		gl_panel_1.setVerticalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_1.createSequentialGroup()
-					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblUserid)
-						.addComponent(lblNewLabel))
-					.addGap(95)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNewLabel)
+						.addComponent(lblUserid))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblKurs)
+						.addComponent(label))
+					.addGap(66)
 					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panel_1.createSequentialGroup()
 							.addGap(4)
@@ -246,5 +269,4 @@ public class Menu extends JFrame {
 		);
 		panel_1.setLayout(gl_panel_1);
 	}
-
 }
