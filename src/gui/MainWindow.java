@@ -1,12 +1,20 @@
 package gui;
 
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.Color;
+import java.awt.Desktop;
+
 import javax.swing.border.LineBorder;
+
+import guiModules.LoginModul;
+import guiModules.PersistenzModul;
+import upper.containertier.Gesamtsystem;
+import user.Creator;
+import user.Solver;
+
 import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -15,12 +23,18 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.UIManager;
 import javax.swing.JButton;
-import javax.swing.JProgressBar;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 
-public class MainWindow {
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
+public class MainWindow {	
+	
 	private JFrame frmQuestionmark;
 	private JTextField textField;
 	private JPasswordField passwordField;
@@ -52,7 +66,12 @@ public class MainWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		//Load Gesamtsystem:
+		Gesamtsystem currentSys = PersistenzModul.loadGesamtsystem("C:\\OOP - Projekt", "QuestionMarkFile");
+		ArrayList<Creator> abc = currentSys.getAllCreators();
+
 		frmQuestionmark = new JFrame();
+		frmQuestionmark.setResizable(false);
 		frmQuestionmark.setTitle("QuestionMark");
 		frmQuestionmark.setBounds(100, 100, 500, 300);
 		frmQuestionmark.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -85,90 +104,139 @@ public class MainWindow {
 		gbc_panel_1.gridx = 0;
 		gbc_panel_1.gridy = 1;
 		frmQuestionmark.getContentPane().add(panel_1, gbc_panel_1);
-		GridBagLayout gbl_panel_1 = new GridBagLayout();
-		gbl_panel_1.columnWidths = new int[]{87, 373, 0};
-		gbl_panel_1.rowHeights = new int[]{26, 26, 0, 0, 0};
-		gbl_panel_1.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		gbl_panel_1.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		panel_1.setLayout(gbl_panel_1);
 		
 		JLabel lblUserid = new JLabel("UserID:");
 		lblUserid.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		GridBagConstraints gbc_lblUserid = new GridBagConstraints();
-		gbc_lblUserid.anchor = GridBagConstraints.NORTHWEST;
-		gbc_lblUserid.insets = new Insets(0, 0, 5, 5);
-		gbc_lblUserid.gridx = 0;
-		gbc_lblUserid.gridy = 0;
-		panel_1.add(lblUserid, gbc_lblUserid);
 		
 		textField = new JTextField();
 		textField.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.anchor = GridBagConstraints.SOUTHWEST;
-		gbc_textField.insets = new Insets(0, 0, 5, 0);
-		gbc_textField.gridx = 1;
-		gbc_textField.gridy = 0;
-		panel_1.add(textField, gbc_textField);
 		textField.setColumns(15);
 		
 		JLabel lblPasswort = new JLabel("Passwort:");
 		lblPasswort.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		GridBagConstraints gbc_lblPasswort = new GridBagConstraints();
-		gbc_lblPasswort.anchor = GridBagConstraints.NORTHWEST;
-		gbc_lblPasswort.insets = new Insets(0, 0, 5, 5);
-		gbc_lblPasswort.gridx = 0;
-		gbc_lblPasswort.gridy = 1;
-		panel_1.add(lblPasswort, gbc_lblPasswort);
 		
 		passwordField = new JPasswordField();
 		passwordField.setColumns(15);
 		passwordField.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		GridBagConstraints gbc_passwordField = new GridBagConstraints();
-		gbc_passwordField.insets = new Insets(0, 0, 5, 0);
-		gbc_passwordField.anchor = GridBagConstraints.SOUTHWEST;
-		gbc_passwordField.gridx = 1;
-		gbc_passwordField.gridy = 1;
-		panel_1.add(passwordField, gbc_passwordField);
 		
 		JButton btnHelp = new JButton("Help");
+		btnHelp.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				//Display Help HTML page
+				try {
+					File helpPage = new File("src/help/helpPage.html");
+					java.awt.Desktop.getDesktop().open(helpPage);;
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					System.out.println("An Error occured");
+				}
+				
+				
+			}
+		});
 		btnHelp.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		GridBagConstraints gbc_btnHelp = new GridBagConstraints();
-		gbc_btnHelp.insets = new Insets(0, 0, 5, 5);
-		gbc_btnHelp.gridx = 0;
-		gbc_btnHelp.gridy = 2;
-		panel_1.add(btnHelp, gbc_btnHelp);
+		
+		JLabel lblTest = new JLabel("");
+		lblTest.setForeground(Color.RED);
+		lblTest.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JButton btnNewButton = new JButton("Login");
+		
+		//Händischer Code
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				//Handle Log-In
-				Menu.launchMenu();
-				frmQuestionmark.setVisible(false);
+				//Handle Login Button pressed
+				
+				//Use LoginModul -> attempt Login
+				//
+				// if return != null -> success
+				// pass UserShell along to Menu
+				
+				
+				if(textField.getText().startsWith("s")){
+					String psw = new String(passwordField.getPassword());
+					Solver currentUser = LoginModul.attemptSolverLogin(currentSys, textField.getText(), psw);
+					if(currentUser!=null){
+						Menu.launchSolverMenu(currentUser, currentSys);
+						frmQuestionmark.setVisible(false);
+					}
+					
+				}else if(textField.getText().startsWith("c")){
+					String psw = new String(passwordField.getPassword());
+					Creator currentUser = LoginModul.attemptCreatorLogin(currentSys, textField.getText(), psw);
+					if(currentUser!=null){
+						Menu.launchCreatorMenu(currentUser, currentSys);
+						frmQuestionmark.setVisible(false);
+					}
+					
+				}else{
+					//Error
+					lblTest.setText("Login fehlerhaft!");
+				}
+				
 			}
 		});
+		
+		/**
+		 * Generierter Code von WindowBuilder
+		 * |
+		 * V
+		 */
+		
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-		gbc_btnNewButton.insets = new Insets(0, 0, 5, 0);
-		gbc_btnNewButton.anchor = GridBagConstraints.WEST;
-		gbc_btnNewButton.gridx = 1;
-		gbc_btnNewButton.gridy = 2;
-		panel_1.add(btnNewButton, gbc_btnNewButton);
+		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
+		gl_panel_1.setHorizontalGroup(
+			gl_panel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel_1.createSequentialGroup()
+							.addGap(7)
+							.addComponent(btnHelp)
+							.addGap(12)
+							.addComponent(btnNewButton))
+						.addGroup(gl_panel_1.createSequentialGroup()
+							.addContainerGap()
+							.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
+								.addComponent(lblPasswort)
+								.addComponent(lblUserid))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
+								.addGroup(Alignment.TRAILING, gl_panel_1.createSequentialGroup()
+									.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+									.addGap(131))
+								.addGroup(gl_panel_1.createSequentialGroup()
+									.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED, 131, Short.MAX_VALUE)))
+							.addGap(210)))
+					.addGap(398))
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblTest, GroupLayout.DEFAULT_SIZE, 464, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		gl_panel_1.setVerticalGroup(
+			gl_panel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
+						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblUserid))
+					.addGap(5)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
+						.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblPasswort))
+					.addGap(5)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnHelp)
+						.addComponent(btnNewButton))
+					.addGap(3)
+					.addComponent(lblTest, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+		);
+		panel_1.setLayout(gl_panel_1);
 		
-		JLabel lblFortschirtt = new JLabel("Fortschritt:");
-		GridBagConstraints gbc_lblFortschirtt = new GridBagConstraints();
-		gbc_lblFortschirtt.insets = new Insets(0, 0, 0, 5);
-		gbc_lblFortschirtt.gridx = 0;
-		gbc_lblFortschirtt.gridy = 3;
-		panel_1.add(lblFortschirtt, gbc_lblFortschirtt);
 		
-		JProgressBar progressBar = new JProgressBar();
-		progressBar.setValue(50);//Möglichen Fortschritt setzen
-		GridBagConstraints gbc_progressBar = new GridBagConstraints();
-		gbc_progressBar.fill = GridBagConstraints.HORIZONTAL;
-		gbc_progressBar.gridx = 1;
-		gbc_progressBar.gridy = 3;
-		panel_1.add(progressBar, gbc_progressBar);
 	}
 
 }
