@@ -23,12 +23,12 @@ public class Setup {
 		savePath = scan.nextLine();
 		scan.close();
 		
-		//Genrierung Solver Accounts -> Kurs A
+		//Generierung Solver Accounts -> Kurs A
 		ArrayList<Solver> solverList = new ArrayList<Solver>();
 		
 			//Anlegen von dem Admin Account -> Kurs A
 			solverList.add(new Solver("sAdminA", "HWR_Admin", "Max", "Mustermann"));
-			//Regul‰re Accounts - 15 St¸ck -> Kurs A
+			//Regul√§re Accounts - 15 St√ºck -> Kurs A
 			solverList.add(new Solver("sZimmManf", "kEstu8eq", "Manfred", "Zimmermann"));
 			solverList.add(new Solver("sHeinJoch", "SpupHU4e", "Jochim", "Heintze"));
 			solverList.add(new Solver("sWoerLore", "kusaFr5W", "Lorenz", "Woerner"));
@@ -50,10 +50,10 @@ public class Setup {
 		
 			//Anlegen von dem Admin Account -> Kurs B
 			solverListB.add(new Solver("sAdminB", "HWR_Admin", "Max", "Mustermann"));
-			//Regul‰re Accounts - 15 St¸ck -> Kurs B
+			//Regul√§re Accounts - 15 St√ºck -> Kurs B
 			solverListB.add(new Solver("sWebeTher","qaWR2mUw","Theresia","Weber"));
 			solverListB.add(new Solver("sBrauSonj","6Ecaprup","Sonja","Braune"));
-			solverListB.add(new Solver("sGroﬂTheo","vajup4tH","Theodor","Groﬂe"));
+			solverListB.add(new Solver("sGro√üTheo","vajup4tH","Theodor","Gro√üe"));
 			solverListB.add(new Solver("sSternUtz","wraT7aca","Utz","Sternberg"));
 			solverListB.add(new Solver("sBohnRose","xeFrEP7e","Rosemarie","Bohn"));
 			solverListB.add(new Solver("sBierAmel","fraG7nuw","Amelia","Biermann"));
@@ -76,12 +76,12 @@ public class Setup {
 			
 		//Generierung Creator Accounts 
 		ArrayList<Creator> creatorList = new ArrayList<Creator>();	
-			//Regul‰re Creator Accounts - 5 St¸ck
+			//Regul√§re Creator Accounts - 5 St√ºck
 			creatorList.add(new Creator("cSchmietendorf", "abc", "Andreas", "Schmietendorf", kursList));
 		
 		//Generierung Gesamt Solver Liste
 		ArrayList<Solver> solverGlobal = new ArrayList<Solver>();
-			//Hinzuf¸gen der zwei Solver Listen
+			//Hinzuf√ºgen der zwei Solver Listen
 			solverGlobal.addAll(solverList);
 			solverGlobal.addAll(solverListB);
 		
