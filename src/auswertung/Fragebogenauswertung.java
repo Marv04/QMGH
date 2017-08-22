@@ -38,7 +38,7 @@ public class Fragebogenauswertung implements Serializable{
 		this.sourceFragebogen = (Fragebogen) sourceFragebogen.clone();
 		this.allAntworten = new ArrayList<ArrayList<Integer>>();
 		
-		//Bringt thias.allAntworten auf die richtige Größe
+		//Bringt this.allAntworten auf die richtige GrÃ¶ÃŸe
 		Iterator<Frage> sourceFragenIt = sourceFragebogen.getFragen().iterator();
 		Frage sourceFrageShell;
 		//Loopt durch die Anzahl der Fragen
@@ -73,7 +73,7 @@ public class Fragebogenauswertung implements Serializable{
 	 */
 	public void addAntwort(ArrayList<ArrayList<Integer>> submittedAntworten){
 		System.out.println("submissionSize=="+ submittedAntworten.size());
-		//antwort und frage haben exakt dieselbe Struktur!
+		//Antwort und Frage haben exakt dieselbe Struktur!
 		Iterator<ArrayList<Integer>> targetAntwortenIt = this.allAntworten.iterator();
 		Iterator<ArrayList<Integer>> submittedAntwortenIt = submittedAntworten.iterator();
 		ArrayList<Integer> targetFrageShell;
@@ -82,13 +82,13 @@ public class Fragebogenauswertung implements Serializable{
 		Integer antwortmoeglichkeitIndex;
 		
 		while(targetAntwortenIt.hasNext()){
-			//Platzhalter für die Zieladresse der Frage
+			//Platzhalter fÃ¼r die Zieladresse der Frage
 			targetFrageShell = targetAntwortenIt.next();
-			//Platzhalter für Iterator der Antwortmoeglichkeiten
+			//Platzhalter fÃ¼r Iterator der Antwortmoeglichkeiten
 			submittedAntwortmoeglichkeitenIt = submittedAntwortenIt.next().iterator();
-			//Loopt durch alle möglichen Antwortmoeglichkeiten
+			//Loopt durch alle mÃ¶glichen Antwortmoeglichkeiten
 			while(submittedAntwortmoeglichkeitenIt.hasNext()){
-				//Platzhalter für die zu inkrementierende Antwortmoeglichkeit
+				//Platzhalter fÃ¼r die zu inkrementierende Antwortmoeglichkeit
 				antwortmoeglichkeitIndex = submittedAntwortmoeglichkeitenIt.next();
 				//Inkrementierung
 				targetFrageShell.set(antwortmoeglichkeitIndex, targetFrageShell.get(antwortmoeglichkeitIndex) + 1);
